@@ -7,6 +7,7 @@ from examples.call_center_mock.tools import (
     CallCenterAggregateTool,
     CallCenterFilters,
     CallCenterLoadDatasetTool,
+    CallCenterTrendTool,
 )
 
 
@@ -35,6 +36,14 @@ async def main():
     aggregate_result = await aggregate_tool(context, config)
     print("\nAGGREGATE RESULT")
     print(aggregate_result)
+
+    trend_tool = CallCenterTrendTool(
+        reasoning="Show monthly trend for escalation and sentiment.",
+        period="month",
+    )
+    trend_result = await trend_tool(context, config)
+    print("\nTREND RESULT")
+    print(trend_result)
 
 
 if __name__ == "__main__":

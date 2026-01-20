@@ -12,6 +12,18 @@ ChurnRisk = Literal["low", "medium", "high"]
 ResolutionStatus = Literal["resolved", "pending", "failed"]
 
 
+class CallCenterFilters(BaseModel):
+    segments: list[str] | None = None
+    tags: list[str] | None = None
+    products: list[str] | None = None
+    queues: list[str] | None = None
+    channels: list[str] | None = None
+    sentiment_labels: list[str] | None = None
+    escalation_only: bool = False
+    min_sentiment: float | None = None
+    max_sentiment: float | None = None
+
+
 class AgentProfile(BaseModel):
     agent_id: str
     name: str
@@ -182,3 +194,19 @@ class AggregateSummary(BaseModel):
     focus_metric: str
     top_groups: list[GroupKpi]
     insights: list[str]
+
+
+class TrendDelta(BaseModel):
+    value: float | None
+    pct: float | None
+
+
+class TrendPoint(BaseModel):
+    period: str
+    kpis: KpiSummary
+    deltas: dict[str, TrendDelta]
+
+
+class TrendSummary(BaseModel):
+    period: str
+    points: list[TrendPoint]

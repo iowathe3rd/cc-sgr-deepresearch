@@ -19,6 +19,7 @@ agents:
     tools:
       - "CallCenterLoadDatasetTool"
       - "CallCenterAggregateTool"
+      - "CallCenterTrendTool"
       - "GeneratePlanTool"
       - "AdaptPlanTool"
       - "ClarificationTool"

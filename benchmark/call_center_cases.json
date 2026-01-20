@@ -1,0 +1,27 @@
+[
+  {
+    "id": "aug_overall",
+    "task": "Analyze August 2024 call center data. Provide call_count, avg_wait_sec, escalation_rate, fcr_rate, and avg_sentiment_score.",
+    "date_from": "2024-08-01",
+    "date_to": "2024-08-31",
+    "filters": {}
+  },
+  {
+    "id": "aug_complaints",
+    "task": "Analyze August 2024 complaint-tagged calls. Provide call_count, avg_wait_sec, and escalation_rate.",
+    "date_from": "2024-08-01",
+    "date_to": "2024-08-31",
+    "filters": {
+      "tags": [
+        "complaint"
+      ]
+    }
+  },
+  {
+    "id": "jul_overall",
+    "task": "Analyze July 2024 call center data. Provide call_count, avg_wait_sec, escalation_rate, and fcr_rate.",
+    "date_from": "2024-07-01",
+    "date_to": "2024-07-31",
+    "filters": {}
+  }
+]

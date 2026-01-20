@@ -2,7 +2,7 @@ from sgr_agent_core.agent_definition import AgentDefinition, PromptsConfig
 from sgr_agent_core.tools import AdaptPlanTool, ClarificationTool, FinalAnswerTool, GeneratePlanTool
 
 from examples.call_center_mock.agents import CallCenterDeepResearchAgent
-from examples.call_center_mock.tools import CallCenterAggregateTool, CallCenterLoadDatasetTool
+from examples.call_center_mock.tools import CallCenterAggregateTool, CallCenterLoadDatasetTool, CallCenterTrendTool
 
 CALL_CENTER_SYSTEM_PROMPT = """You are a bank call center analytics expert.
 Use the available tools to analyze the provided call center dataset.
@@ -16,6 +16,7 @@ Available tools:
 DEFAULT_TOOLKIT = [
     CallCenterLoadDatasetTool,
     CallCenterAggregateTool,
+    CallCenterTrendTool,
     GeneratePlanTool,
     AdaptPlanTool,
     ClarificationTool,

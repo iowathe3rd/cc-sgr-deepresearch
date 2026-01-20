@@ -13,9 +13,13 @@ from sgr_agent_core.tools import (
 )
 
 try:
-    from tools import CallCenterAggregateTool, CallCenterLoadDatasetTool
+    from tools import CallCenterAggregateTool, CallCenterLoadDatasetTool, CallCenterTrendTool
 except ImportError:  # pragma: no cover - fallback for package imports
-    from examples.call_center_mock.tools import CallCenterAggregateTool, CallCenterLoadDatasetTool
+    from examples.call_center_mock.tools import (
+        CallCenterAggregateTool,
+        CallCenterLoadDatasetTool,
+        CallCenterTrendTool,
+    )
 
 
 class CallCenterDeepResearchAgent(SGRToolCallingAgent):
@@ -35,6 +39,7 @@ class CallCenterDeepResearchAgent(SGRToolCallingAgent):
         base_tools = [
             CallCenterLoadDatasetTool,
             CallCenterAggregateTool,
+            CallCenterTrendTool,
             GeneratePlanTool,
             AdaptPlanTool,
             ClarificationTool,

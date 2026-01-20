@@ -5,7 +5,7 @@ from sgr_agent_core import AgentFactory, AgentDefinition, PromptsConfig
 from sgr_agent_core.tools import AdaptPlanTool, ClarificationTool, FinalAnswerTool, GeneratePlanTool
 
 from examples.call_center_mock.agents import CallCenterDeepResearchAgent
-from examples.call_center_mock.tools import CallCenterAggregateTool, CallCenterLoadDatasetTool
+from examples.call_center_mock.tools import CallCenterAggregateTool, CallCenterLoadDatasetTool, CallCenterTrendTool
 
 SYSTEM_PROMPT = """You are a bank call center analytics expert.
 Use the available tools to analyze the provided call center dataset.
@@ -28,13 +28,14 @@ async def main():
         tools=[
             CallCenterLoadDatasetTool,
             CallCenterAggregateTool,
+            CallCenterTrendTool,
             GeneratePlanTool,
             AdaptPlanTool,
             ClarificationTool,
             FinalAnswerTool,
         ],
         prompts=PromptsConfig(system_prompt_str=SYSTEM_PROMPT),
-        llm={"api_key": api_key, "model": "gpt-4o-mini", "temperature": 0.3},
+        llm={"api_key": api_key, "model": "gpt-5-nano-2025-08-07", "temperature": 0.3},
     )
 
     task_messages = [
