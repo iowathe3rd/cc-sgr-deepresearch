@@ -1,27 +1,45 @@
 [
   {
-    "id": "aug_overall",
-    "task": "Analyze August 2024 call center data. Provide call_count, avg_wait_sec, escalation_rate, fcr_rate, and avg_sentiment_score.",
+    "id": "aug_overall_deep",
+    "task": "Analyze August 2024 call center data. Provide call_count, unique_customers, repeat_caller_rate, avg_wait_sec, sla_20s_rate, transfer_rate, escalation_rate, abandon_rate, fcr_rate, resolution_rate, avg_sentiment_score, negative_sentiment_rate, complaint_rate, auth_fail_rate, and total_revenue_impact_usd.",
     "date_from": "2024-08-01",
     "date_to": "2024-08-31",
     "filters": {}
   },
   {
-    "id": "aug_complaints",
-    "task": "Analyze August 2024 complaint-tagged calls. Provide call_count, avg_wait_sec, and escalation_rate.",
+    "id": "aug_complaint_risk",
+    "task": "Analyze August 2024 complaint or regulatory-risk calls. Provide call_count, avg_wait_sec, escalation_rate, fcr_rate, negative_sentiment_rate, compliance_flag_rate, total_refunds_usd, and total_revenue_impact_usd.",
     "date_from": "2024-08-01",
     "date_to": "2024-08-31",
     "filters": {
-      "tags": [
-        "complaint"
-      ]
+      "tags": ["complaint", "regulatory_risk"]
     }
   },
   {
-    "id": "jul_overall",
-    "task": "Analyze July 2024 call center data. Provide call_count, avg_wait_sec, escalation_rate, and fcr_rate.",
+    "id": "jul_high_risk",
+    "task": "Analyze July 2024 high-churn-risk calls. Provide call_count, repeat_caller_rate, avg_wait_sec, resolution_rate, avg_resolution_days, avg_sentiment_score, and total_fraud_loss_usd.",
     "date_from": "2024-07-01",
     "date_to": "2024-07-31",
-    "filters": {}
+    "filters": {
+      "churn_risks": ["high"]
+    }
+  },
+  {
+    "id": "aug_kazakh_language",
+    "task": "Analyze August 2024 Kazakh-language calls. Provide call_count, avg_wait_sec, sla_20s_rate, avg_sentiment_score, complaint_rate, and escalation_rate.",
+    "date_from": "2024-08-01",
+    "date_to": "2024-08-31",
+    "filters": {
+      "languages": ["kk"]
+    }
+  },
+  {
+    "id": "sep_digital_channels",
+    "task": "Analyze September 2024 chat and messaging calls. Provide call_count, avg_wait_sec, transfer_rate, fcr_rate, avg_sentiment_score, and compliance_flag_rate.",
+    "date_from": "2024-09-01",
+    "date_to": "2024-09-30",
+    "filters": {
+      "channels": ["chat", "messaging"]
+    }
   }
 ]

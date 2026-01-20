@@ -23,12 +23,12 @@ uv pip install -e ".[dev]" --python .venv/bin/python
 
 ## Data Contracts
 
-The dataset follows `call_center.v1` schema (see `examples/call_center_mock/contracts.py`).
+The dataset follows `call_center.v2` schema (see `examples/call_center_mock/contracts.py`).
 The generator writes an object with metadata and a `records` array:
 
 ```json
 {
-  "schema_version": "call_center.v1",
+  "schema_version": "call_center.v2",
   "source_system": "mock_call_center",
   "generated_at": "2024-08-01T00:00:00Z",
   "records": [ ... ]
@@ -50,13 +50,13 @@ Records are validated by Pydantic before analysis; invalid records are counted i
 ## Generate Mock Data
 
 ```bash
-PYTHONPATH=. .venv/bin/python examples/call_center_mock/generate_mock_data.py --count 240
+PYTHONPATH=. .venv/bin/python examples/call_center_mock/generate_mock_data.py --count 300
 ```
 
 You can override date range and seed:
 ```bash
 PYTHONPATH=. .venv/bin/python examples/call_center_mock/generate_mock_data.py \
-  --seed 42 --count 240 --start 2024-06-01 --end 2024-09-30
+  --seed 42 --count 300 --start 2024-06-01 --end 2024-09-30
 ```
 
 ## Quick Tool Test (no LLM required)
@@ -95,7 +95,7 @@ client = OpenAI(base_url="http://localhost:8010/v1", api_key="dummy")
 
 response = client.chat.completions.create(
     model="call_center_deep_research",
-    messages=[{"role": "user", "content": "Analyze August 2024 calls. Focus on sentiment drivers, escalations, and recommendations."}],
+    messages=[{"role": "user", "content": "Generate an August 2024 executive report with KPIs (SLA, wait/hold/AHT, transfers, abandon, escalation, FCR), sentiment/complaint rates, compliance flags, and revenue impact. Highlight top root causes and actions."}],
     stream=True,
 )
 
@@ -109,8 +109,12 @@ for chunk in response:
 The benchmark runs predefined cases against the agent and uses a judge agent to grade numeric accuracy.
 The judge uses SGR tool-calling; `gpt-4o-mini` is the recommended judge model.
 
+The dataset now includes multilingual transcripts (about 60% RU, 25% KZ, 15% EN/ZH/UZ/KY).
+Transcripts are long-form (500-1000 words) and include noisy data patterns like missing or truncated text.
+
 ### What it measures
 - Required KPIs vs expected values (tolerances are enforced by the judge prompt)
+- SLA/operational metrics (wait times, transfer/abandon rates), quality/compliance, and financial impact totals
 - Missing metrics or large deviations result in `INCORRECT`
 - Minor omissions result in `PARTIAL`
 

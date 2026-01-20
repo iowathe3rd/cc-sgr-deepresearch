@@ -1,0 +1,37 @@
+case_id,task,expected,predicted,grade_str,grade_report,error
+aug_overall,"Analyze August 2024 call center data. Provide call_count, avg_wait_sec, escalation_rate, fcr_rate, and avg_sentiment_score.","{'call_count': 260, 'avg_duration_sec': 1015.8038461538462, 'avg_wait_sec': 105.77307692307693, 'avg_sentiment_score': -0.10429615384615384, 'escalation_rate': 0.377, 'fcr_rate': 0.512, 'avg_nps': 4.856540084388186}","August 2024 call center KPIs:\n- Call count: 260\n- Avg wait time (sec): 105.77\n- Escalation rate: 0.377 (37.7%)\n- FCR rate: Not available in this data slice (Aug 2024). To compute FCR, need a first-contact resolution flag or a separate field indicating resolution on first contact. If available, I can calculate it; otherwise, provide guidance to fetch this metric from the system or include a field in future extractions.\n- Avg sentiment score: -0.1043",PARTIAL,"{'reasoning': 'Identify requested metrics: call_count, avg_wait_sec, escalation_rate, fcr_rate, avg_sentiment_score. Note that the predicted answer includes four metrics (call_count, avg_wait_sec, escalation_rate, avg_sentiment_score) and omits fcr_rate. Evaluate closeness to ground truth: four metrics match closely; one metric (fcr_rate) is missing, thus the overall completion is PARTIAL.', 'expected_metrics': {'call_count': 260, 'avg_duration_sec': 1015.8038461538462, 'avg_wait_sec': 105.77307692307693, 'avg_sentiment_score': -0.10429615384615384, 'escalation_rate': 0.377, 'fcr_rate': 0.512, 'avg_nps': 4.856540084388186}, 'predicted_excerpt': 'August 2024 call center KPIs:\\n- Call count: 260\\n- Avg wait time (sec): 105.77\\n- Escalation rate: 0.377 (37.7%)\\n- FCR rate: Not available in this data slice (Aug 2024). To compute FCR, need a first-contact resolution flag or a separate field indicating resolution on first contact. If available, I can calculate it; otherwise, provide guidance to fetch this metric from the system or include a field in future extractions.\\n- Avg sentiment score: -0.1043', 'grade_answer': 'PARTIAL'}",
+aug_complaints,"Analyze August 2024 complaint-tagged calls. Provide call_count, avg_wait_sec, and escalation_rate.","{'call_count': 93, 'avg_duration_sec': 963.6774193548387, 'avg_wait_sec': 121.43010752688173, 'avg_sentiment_score': -0.39540860215053764, 'escalation_rate': 0.699, 'fcr_rate': 0.323, 'avg_nps': 3.1931818181818183}","August 2024 - complaint-tagged calls KPI summary:
+- Call count: 93
+- Average wait time: 121.43 seconds
+- Escalation rate: 69.9%
+
+Notes:
+- Data slice: August 2024, tag = 'complaint'.
+- Some data fields (transcripts) were excluded; the escalation_rate reflects the proportion of calls escalated within this slice based on the available data.
+- The results are not representative of all call types or months.
+",CORRECT,"{'reasoning': 'All requested metrics match the ground-truth values within tolerance: call_count=93, avg_wait_sec≈121.4301, escalation_rate=0.699.', 'expected_metrics': {'call_count': 93, 'avg_duration_sec': 963.6774193548387, 'avg_wait_sec': 121.43010752688173, 'avg_sentiment_score': -0.39540860215053764, 'escalation_rate': 0.699, 'fcr_rate': 0.323, 'avg_nps': 3.1931818181818183}, 'predicted_excerpt': 'August 2024 - complaint-tagged calls KPI summary:\n- Call count: 93\n- Average wait time: 121.43 seconds\n- Escalation rate: 69.9%', 'grade_answer': 'CORRECT'}",
+jul_overall,"Analyze July 2024 call center data. Provide call_count, avg_wait_sec, escalation_rate, and fcr_rate.","{'call_count': 247, 'avg_duration_sec': 1028.6194331983806, 'avg_wait_sec': 106.11336032388664, 'avg_sentiment_score': -0.09049392712550608, 'escalation_rate': 0.34, 'fcr_rate': 0.538, 'avg_nps': 4.959821428571429}","July 2024 KPIs (overall):
+- Call count: 247
+- Avg wait time: 106.11 seconds
+- Escalation rate: 34.0%
+- First contact resolution (FCR) rate: 53.8%
+
+Key segmentation and insights:
+- Top volume group: repeat_caller (122 calls), followed by complaint (74), high_value (65), regulatory_risk (57).
+- Average wait times by group (illustrative): repeat_caller ~110 s, complaint ~114 s, high_value ~108 s, regulatory_risk ~117 s. This suggests wait-time variance is modest across top groups, with regulatory_risk slightly higher.
+- Sentiment skew: overall negative sentiment (-0.09 average); highest negativity in 'complaint' group (-0.40).
+- Notable correlations: higher escalation rates align with the complaint and regulatory_risk groups; FCR is relatively strong in upsell (0.674) but low in complaint (0.419).
+
+Operational implications:
+- Escalation rate at 34% is above typical targets; investigate escalation triggers, and ensure agents have decision support and access to authority to resolve more issues at first contact.
+- Avg wait of ~106 seconds indicates room to improve service levels. Consider staffing alignment with July peak load (noting top volume groups); attempt IVR deflection for common, low-complexity issues to reduce live queue times.
+- FCR at 53.8% means nearly half of cases are not resolved in first contact; focus on root causes in high-frequency issues (repeat_caller, complaints, regulatory_risk) to improve FCR (improve knowledge base, quick-resolution scripts, and specialist routing).
+
+Recommendations (prioritized):
+1) Triage and routing optimization: set up fast-track paths for high-volume, lower-complexity issues and ensure escalation authority is aligned with regional policies.
+2) Knowledge base and training: update the KB with fix-it-yourself steps for top issues (login issues, forbearance guidance, fraud alerts) to raise FCR.
+3) Deflection and digital channels: deploy targeted self-service or chatbots for the most frequent issues (login help, payment delays) to reduce call volume.
+4) Staffing and scheduling: adjust agent schedules to cover peak times inferred from July data; consider dynamic staffing for the identified queues with higher wait times.
+5) Monitor and iterate: track weekly metrics for these KPIs and review top groups monthly to catch emerging trends quickly.
+
+If you’d like, I can drill into a specific dimension (e.g., by queue or channel) or provide a targeted action plan with a 4-week implementation timeline.",CORRECT,"{'reasoning': 'All four requested metrics (call_count, avg_wait_sec, escalation_rate, fcr_rate) match the ground truth within the specified tolerances. Call count exact, avg_wait_sec within 0.02, escalation_rate and fcr_rate exact. No missing metrics among those requested.', 'expected_metrics': {'call_count': 247, 'avg_duration_sec': 1028.6194331983806, 'avg_wait_sec': 106.11336032388664, 'avg_sentiment_score': -0.09049392712550608, 'escalation_rate': 0.34, 'fcr_rate': 0.538, 'avg_nps': 4.959821428571429}, 'predicted_excerpt': 'July 2024 KPIs (overall): - Call count: 247 - Avg wait time: 106.11 seconds - Escalation rate: 34.0% - First contact resolution (FCR) rate: 53.8%', 'grade_answer': 'CORRECT'}",

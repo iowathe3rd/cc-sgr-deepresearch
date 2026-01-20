@@ -86,7 +86,12 @@ class CallCenterLoadDatasetTool(BaseTool):
             "schema_version": SCHEMA_VERSION,
         }
 
-        segments = Counter(segment for segment in (_get_nested(record, "caller", "segment") for record in filtered) if segment)
+        segments = Counter(
+            segment for segment in (_get_nested(record, "caller", "segment") for record in filtered) if segment
+        )
+        languages = Counter(language for language in (_get_nested(record, "language") for record in filtered) if language)
+        channels = Counter(channel for channel in (_get_nested(record, "channel") for record in filtered) if channel)
+        queues = Counter(queue for queue in (_get_nested(record, "queue") for record in filtered) if queue)
         tags = Counter(
             tag
             for record in filtered
@@ -96,12 +101,19 @@ class CallCenterLoadDatasetTool(BaseTool):
         sentiments = Counter(
             label for label in (_get_nested(record, "nlp", "sentiment_label") for record in filtered) if label
         )
+        missing_transcripts = sum(1 for record in filtered if not _get_nested(record, "nlp", "transcript"))
+        missing_wait_time = sum(
+            1 for record in filtered if _get_nested(record, "interaction", "wait_time_sec") is None
+        )
         kpis = compute_kpis(filtered)
 
         summary = LoadSummary(
             total_records=len(filtered),
             date_range=DateRange(start=self.date_from, end=self.date_to),
             segment_breakdown=[GroupCount(group=key, count=value) for key, value in segments.most_common()],
+            language_breakdown=[GroupCount(group=key, count=value) for key, value in languages.most_common()],
+            channel_breakdown=[GroupCount(group=key, count=value) for key, value in channels.most_common()],
+            queue_breakdown=[GroupCount(group=key, count=value) for key, value in queues.most_common()],
             top_tags=[GroupCount(group=key, count=value) for key, value in tags.most_common(8)],
             sentiment_distribution=[
                 GroupCount(group=key, count=value) for key, value in sentiments.most_common()
@@ -116,10 +128,15 @@ class CallCenterLoadDatasetTool(BaseTool):
                     segment=record.caller.segment,
                     issue=record.case.issue_category,
                     sentiment=record.nlp.sentiment_label,
+                    language=record.language,
+                    channel=record.channel,
+                    priority=record.priority,
                 )
                 for record in filtered[:5]
             ],
             invalid_records=invalid_records,
+            missing_transcripts=missing_transcripts,
+            missing_wait_time=missing_wait_time,
         )
         return json.dumps(summary.model_dump(by_alias=True), indent=2)
 
@@ -130,12 +147,37 @@ class CallCenterAggregateTool(BaseTool):
     tool_name: ClassVar[str] = "call_center_aggregate"
 
     reasoning: str = Field(description="Why this aggregation is needed")
-    group_by: Literal["tag", "agent", "segment", "product", "queue", "channel"] = Field(
-        default="tag", description="Dimension to group by"
-    )
-    focus_metric: Literal["volume", "sentiment", "escalation", "wait_time", "duration"] = Field(
-        default="sentiment", description="Metric used to rank groups"
-    )
+    group_by: Literal[
+        "tag",
+        "agent",
+        "segment",
+        "product",
+        "issue_category",
+        "issue_subcategory",
+        "queue",
+        "channel",
+        "region",
+        "language",
+    ] = Field(default="tag", description="Dimension to group by")
+    focus_metric: Literal[
+        "volume",
+        "sentiment",
+        "negative_sentiment",
+        "escalation",
+        "wait_time",
+        "hold_time",
+        "after_call_work",
+        "duration",
+        "transfer",
+        "abandon",
+        "fcr",
+        "resolution",
+        "complaint",
+        "fraud_risk",
+        "regulatory_risk",
+        "compliance",
+        "revenue_impact",
+    ] = Field(default="sentiment", description="Metric used to rank groups")
     top_n: int = Field(default=5, ge=1, le=15, description="How many top groups to return")
     min_calls: int = Field(default=2, ge=1, description="Minimum calls per group")
 
@@ -153,15 +195,53 @@ class CallCenterAggregateTool(BaseTool):
                 return item.call_count
             if self.focus_metric == "sentiment":
                 return item.avg_sentiment_score if item.avg_sentiment_score is not None else 0
+            if self.focus_metric == "negative_sentiment":
+                return item.negative_sentiment_rate
             if self.focus_metric == "escalation":
                 return item.escalation_rate
             if self.focus_metric == "wait_time":
                 return item.avg_wait_sec if item.avg_wait_sec is not None else 0
+            if self.focus_metric == "hold_time":
+                return item.avg_hold_sec if item.avg_hold_sec is not None else 0
+            if self.focus_metric == "after_call_work":
+                return item.avg_after_call_work_sec if item.avg_after_call_work_sec is not None else 0
             if self.focus_metric == "duration":
                 return item.avg_duration_sec if item.avg_duration_sec is not None else 0
+            if self.focus_metric == "transfer":
+                return item.transfer_rate
+            if self.focus_metric == "abandon":
+                return item.abandon_rate
+            if self.focus_metric == "fcr":
+                return item.fcr_rate
+            if self.focus_metric == "resolution":
+                return item.resolution_rate
+            if self.focus_metric == "complaint":
+                return item.complaint_rate
+            if self.focus_metric == "fraud_risk":
+                return item.fraud_risk_rate
+            if self.focus_metric == "regulatory_risk":
+                return item.regulatory_risk_rate
+            if self.focus_metric == "compliance":
+                return item.compliance_flag_rate
+            if self.focus_metric == "revenue_impact":
+                return item.total_revenue_impact_usd
             return 0
 
-        reverse = self.focus_metric in {"volume", "escalation", "wait_time", "duration"}
+        reverse = self.focus_metric in {
+            "volume",
+            "negative_sentiment",
+            "escalation",
+            "wait_time",
+            "hold_time",
+            "after_call_work",
+            "duration",
+            "transfer",
+            "abandon",
+            "complaint",
+            "fraud_risk",
+            "regulatory_risk",
+            "compliance",
+        }
         sorted_groups = sorted(group_metrics, key=_sort_key, reverse=reverse)
 
         insights = []
@@ -171,6 +251,16 @@ class CallCenterAggregateTool(BaseTool):
             insights.append("Escalation rate is elevated; review escalation triggers and routing.")
         if overall.avg_wait_sec and overall.avg_wait_sec > 90:
             insights.append("Average wait time is high; staffing or IVR deflection may be needed.")
+        if overall.sla_20s_rate < 0.6:
+            insights.append("SLA 20s attainment is weak; optimize queueing and staffing.")
+        if overall.abandon_rate > 0.08:
+            insights.append("Abandon rate is elevated; investigate IVR and wait-time friction.")
+        if overall.auth_fail_rate > 0.05:
+            insights.append("Auth failures are high; review authentication flow and guidance.")
+        if overall.compliance_flag_rate > 0.04:
+            insights.append("Compliance flags detected; review scripts and monitoring.")
+        if overall.total_revenue_impact_usd < 0:
+            insights.append("Negative revenue impact detected; focus on retention and fee recovery.")
         if sorted_groups:
             worst = sorted_groups[0]
             insights.append(f"Most challenged group by {self.focus_metric}: {worst.group}.")

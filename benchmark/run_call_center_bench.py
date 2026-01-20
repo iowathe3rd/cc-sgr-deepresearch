@@ -213,7 +213,7 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", type=str, default="evals", help="Directory for benchmark reports")
     parser.add_argument("--generate_dataset", action="store_true")
     parser.add_argument("--seed", type=int, default=42, help="Dataset generation seed")
-    parser.add_argument("--count", type=int, default=240, help="Dataset generation count")
+    parser.add_argument("--count", type=int, default=300, help="Dataset generation count")
     parser.add_argument("--start", type=str, default="2024-06-01", help="Dataset generation start date")
     parser.add_argument("--end", type=str, default="2024-09-30", help="Dataset generation end date")
     parser.add_argument("--dataset-path", type=str, default=str(DEFAULT_DATASET_PATH), help="Dataset file path")

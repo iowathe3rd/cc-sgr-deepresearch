@@ -9,7 +9,8 @@ from examples.call_center_mock.tools import CallCenterAggregateTool, CallCenterL
 
 SYSTEM_PROMPT = """You are a bank call center analytics expert.
 Use the available tools to analyze the provided call center dataset.
-Focus on root causes, trends, segmentation, operational KPIs, and actionable recommendations.
+Focus on root causes, multilingual transcripts, trends, segmentation, operational KPIs, SLA attainment,
+quality/compliance signals, financial impact, and actionable recommendations.
 Rely only on tool outputs and keep the analysis grounded in the data.
 
 Available tools:
@@ -42,8 +43,10 @@ async def main():
         {
             "role": "user",
             "content": (
-                "Analyze August 2024 call center data. Identify the top drivers of negative sentiment, "
-                "escalations, and long wait times. Provide prioritized operational recommendations."
+                "Generate an August 2024 executive report. Include: core KPIs (volume, SLA 20s/60s, "
+                "wait/hold/AHT, transfer, abandon, escalation, FCR, resolution), customer sentiment and "
+                "complaint rates, compliance flags, and total revenue impact. Highlight the top 3 root causes "
+                "by negative sentiment and escalation, and list 5 prioritized actions with expected impact."
             ),
         }
     ]
