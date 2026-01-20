@@ -106,8 +106,8 @@ for chunk in response:
 
 ## Evaluation and Benchmark
 
-The benchmark runs predefined cases against the agent and uses a judge model to grade numeric accuracy.
-The judge must support structured outputs (`response_format` parsing).
+The benchmark runs predefined cases against the agent and uses a judge agent to grade numeric accuracy.
+The judge uses SGR tool-calling; `gpt-4o-mini` is the recommended judge model.
 
 ### What it measures
 - Required KPIs vs expected values (tolerances are enforced by the judge prompt)
@@ -121,7 +121,7 @@ AGENT_API_KEY="your-agent-key" \
 AGENT_MODEL_NAME="gpt-5-nano-2025-08-07" \
 JUDGE_BASE_URL="https://api.openai.com/v1" \
 JUDGE_API_KEY="your-judge-key" \
-JUDGE_MODEL_NAME="gpt-5-nano-2025-08-07" \
+JUDGE_MODEL_NAME="gpt-4o-mini" \
 PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --generate_dataset
 ```
 
@@ -149,7 +149,7 @@ PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --generate_data
 
 ### Benchmark inputs
 - Cases: `benchmark/call_center_cases.json`
-- Judge prompt: `benchmark/call_center_prompts.py`
+- Judge agent + prompt: `benchmark/call_center_judge.py`
 
 ### Output
 - Reports are saved as `evals/call_center_bench_<uuid>.xlsx` (or `.csv` if `openpyxl` is missing).

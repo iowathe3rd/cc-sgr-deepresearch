@@ -17,7 +17,12 @@ sys.path.append(str(project_root))
 
 from dotenv import load_dotenv
 
-from benchmark.call_center_utils import CallCenterGradeModel, grade_call_center_answer
+from benchmark.call_center_judge import (
+    CALL_CENTER_JUDGE_SYSTEM_PROMPT,
+    CallCenterGradeResult,
+    CallCenterGradeTool,
+    CallCenterJudgeAgent,
+)
 from benchmark.utils import save_result
 from examples.call_center_mock.agents import CallCenterDeepResearchAgent
 from examples.call_center_mock.contracts import CallCenterFilters, CallCenterRecord
@@ -67,7 +72,24 @@ def _expected_metrics(records: list[CallCenterRecord], case: dict) -> dict:
     return kpis.model_dump()
 
 
-async def _run_case(case: dict, agent_def: AgentDefinition, judge_config: dict, records: list[CallCenterRecord]) -> Dict[str, Any]:
+def _build_judge_task(case: dict, expected: dict, predicted: str) -> str:
+    expected_json = json.dumps(expected, indent=2, ensure_ascii=False)
+    return (
+        "Task:\\n"
+        f"{case['task']}\\n\\n"
+        "Expected metrics (JSON):\\n"
+        f"{expected_json}\\n\\n"
+        "Predicted answer:\\n"
+        f"{predicted}"
+    )
+
+
+async def _run_case(
+    case: dict,
+    agent_def: AgentDefinition,
+    judge_def: AgentDefinition,
+    records: list[CallCenterRecord],
+) -> Dict[str, Any]:
     task_messages = [{"role": "user", "content": case["task"]}]
     agent: Agent = await AgentFactory.create(agent_def=agent_def, task_messages=task_messages)
 
@@ -76,7 +98,13 @@ async def _run_case(case: dict, agent_def: AgentDefinition, judge_config: dict, 
     try:
         await agent.execute()
         predicted = agent._context.execution_result or ""
-        grade_report: CallCenterGradeModel = grade_call_center_answer(predicted, case["task"], expected, judge_config)
+        judge_task = _build_judge_task(case, expected, predicted)
+        judge_agent: Agent = await AgentFactory.create(
+            agent_def=judge_def, task_messages=[{"role": "user", "content": judge_task}]
+        )
+        await judge_agent.execute()
+        grade_payload = judge_agent._context.execution_result or ""
+        grade_report = CallCenterGradeResult.model_validate_json(grade_payload)
         grade = grade_report.grade_answer
     except Exception as exc:
         return {
@@ -160,10 +188,18 @@ async def main(args):
         llm=agent_config,
         execution={"max_clarifications": 0, "max_iterations": 6},
     )
+    judge_def = AgentDefinition(
+        name="call_center_judge",
+        base_class=CallCenterJudgeAgent,
+        tools=[CallCenterGradeTool],
+        prompts=PromptsConfig(system_prompt_str=CALL_CENTER_JUDGE_SYSTEM_PROMPT),
+        llm=judge_config,
+        execution={"max_clarifications": 0, "max_iterations": 3},
+    )
 
     results = []
     for case in cases:
-        result = await _run_case(case, agent_def, judge_config, records)
+        result = await _run_case(case, agent_def, judge_def, records)
         results.append(result)
         save_result(results, output_path)
         logger.info("Completed case %s with grade %s", case["id"], result.get("grade_str"))
