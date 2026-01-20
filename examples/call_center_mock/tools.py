@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from collections import Counter
 from pathlib import Path
 from typing import ClassVar, Literal
@@ -23,7 +24,9 @@ from examples.call_center_mock.contracts import (
 )
 from examples.call_center_mock.metrics import compute_kpis, filter_records, group_kpis, trend_kpis
 
-DATASET_PATH = Path(__file__).parent / "mock_data" / "call_center_records.json"
+DATASET_PATH = Path(
+    os.getenv("CALL_CENTER_DATASET_PATH", Path(__file__).parent / "mock_data" / "call_center_records.json")
+)
 
 
 def _get_nested(data: object, *keys: str, default=None):
