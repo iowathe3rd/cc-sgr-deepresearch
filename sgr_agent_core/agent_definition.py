@@ -18,13 +18,26 @@ class LLMConfig(BaseModel, extra="allow"):
     base_url: str = Field(default="https://api.openai.com/v1", description="Base URL")
     model: str = Field(default="gpt-4o-mini", description="Model to use")
     max_tokens: int = Field(default=8000, description="Maximum number of output tokens")
+    max_completion_tokens: int | None = Field(
+        default=None,
+        description="Maximum number of completion tokens (for models that require it)",
+    )
     temperature: float = Field(default=0.4, ge=0.0, le=1.0, description="Generation temperature")
     proxy: str | None = Field(
         default=None, description="Proxy URL (e.g., socks5://127.0.0.1:1081 or http://127.0.0.1:8080)"
     )
 
     def to_openai_client_kwargs(self) -> dict[str, Any]:
-        return self.model_dump(exclude={"api_key", "base_url", "proxy"})
+        data = self.model_dump(exclude={"api_key", "base_url", "proxy"}, mode="json")
+        model_name = (self.model or "").lower()
+        if self.max_completion_tokens is not None:
+            data["max_completion_tokens"] = self.max_completion_tokens
+            data.pop("max_tokens", None)
+            return data
+        if model_name.startswith("gpt-5"):
+            data["max_completion_tokens"] = data.pop("max_tokens", None)
+            data.pop("temperature", None)
+        return data
 
 
 class SearchConfig(BaseModel, extra="allow"):

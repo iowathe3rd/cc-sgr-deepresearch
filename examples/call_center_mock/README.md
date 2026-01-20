@@ -137,3 +137,13 @@ PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --generate_data
 ```bash
 PYTHONPATH=. .venv/bin/python -m pytest tests/test_call_center_metrics.py
 ```
+
+## Logging (all agent runs)
+
+Every agent run writes two log files (if `execution.logs_dir` is set):
+
+- `logs/<timestamp>-<agent_id>-events.jsonl` - structured event stream (run_start, reasoning, tool_execution, error, run_end)
+- `logs/<timestamp>-<agent_id>-log.json` - full summary with tools and reasoning snapshots
+
+The standard rotating log is still written to `logs/sgr_agent_core.log` when the server uses
+`logging_config.yaml`.

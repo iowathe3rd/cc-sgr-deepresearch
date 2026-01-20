@@ -55,6 +55,36 @@ class BaseAgent(AgentRegistryMixin):
         self.streaming_generator = OpenAIStreamingGenerator(model=self.id)
         self.logger = logging.getLogger(f"sgr_agent_core.agents.{self.id}")
         self.log = []
+        self._event_log_path: str | None = None
+        self._init_event_log()
+
+    def _init_event_log(self) -> None:
+        logs_dir = self.config.execution.logs_dir
+        if not logs_dir:
+            return
+        os.makedirs(logs_dir, exist_ok=True)
+        timestamp = self.creation_time.strftime("%Y%m%d-%H%M%S")
+        self._event_log_path = os.path.join(logs_dir, f"{timestamp}-{self.id}-events.jsonl")
+        payload = {
+            "event": "run_start",
+            "agent_id": self.id,
+            "timestamp": datetime.now().isoformat(),
+            "model_config": self.config.llm.model_dump(exclude={"api_key", "proxy"}, mode="json"),
+            "toolkit": [tool.tool_name for tool in self.toolkit],
+            "task_messages": self.task_messages,
+        }
+        self._write_event_log(payload)
+
+    def _write_event_log(self, event: dict) -> None:
+        if not self._event_log_path:
+            return
+        try:
+            event.setdefault("agent_id", self.id)
+            event.setdefault("timestamp", datetime.now().isoformat())
+            with open(self._event_log_path, "a", encoding="utf-8") as handle:
+                handle.write(json.dumps(event, ensure_ascii=False, default=str) + "\n")
+        except Exception as exc:
+            self.logger.debug(f"Failed to write event log: {exc}")
 
     async def provide_clarification(self, messages: list[ChatCompletionMessageParam]):
         """Receive clarification from an external source (e.g. user input) in
@@ -94,6 +124,13 @@ class BaseAgent(AgentRegistryMixin):
                 "agent_reasoning": result.model_dump(mode="json"),
             }
         )
+        self._write_event_log(
+            {
+                "event": "reasoning",
+                "step_number": self._context.iteration,
+                "agent_reasoning": result.model_dump(mode="json"),
+            }
+        )
 
     def _log_tool_execution(self, tool: BaseTool, result: str):
         self.logger.info(
@@ -110,6 +147,15 @@ class BaseAgent(AgentRegistryMixin):
                 "step_number": self._context.iteration,
                 "timestamp": datetime.now().isoformat(),
                 "step_type": "tool_execution",
+                "tool_name": tool.tool_name,
+                "agent_tool_context": tool.model_dump(mode="json"),
+                "agent_tool_execution_result": result,
+            }
+        )
+        self._write_event_log(
+            {
+                "event": "tool_execution",
+                "step_number": self._context.iteration,
                 "tool_name": tool.tool_name,
                 "agent_tool_context": tool.model_dump(mode="json"),
                 "agent_tool_execution_result": result,
@@ -221,7 +267,24 @@ class BaseAgent(AgentRegistryMixin):
             self.logger.error(f"❌ Agent execution error: {str(e)}")
             self._context.state = AgentStatesEnum.FAILED
             traceback.print_exc()
+            self._write_event_log(
+                {
+                    "event": "error",
+                    "step_number": self._context.iteration,
+                    "error": str(e),
+                    "traceback": traceback.format_exc(),
+                }
+            )
         finally:
             if self.streaming_generator is not None:
                 self.streaming_generator.finish(self._context.execution_result)
             self._save_agent_log()
+            self._write_event_log(
+                {
+                    "event": "run_end",
+                    "state": self._context.state,
+                    "iteration": self._context.iteration,
+                    "execution_result": self._context.execution_result,
+                    "duration_sec": round((datetime.now() - self.creation_time).total_seconds(), 3),
+                }
+            )

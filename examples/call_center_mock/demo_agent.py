@@ -35,7 +35,7 @@ async def main():
             FinalAnswerTool,
         ],
         prompts=PromptsConfig(system_prompt_str=SYSTEM_PROMPT),
-        llm={"api_key": api_key, "model": "gpt-5-nano-2025-08-07", "temperature": 0.3},
+        llm={"api_key": api_key, "model": "gpt-5-nano-2025-08-07"},
     )
 
     task_messages = [

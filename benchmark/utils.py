@@ -1,9 +1,12 @@
+import logging
 from typing import Literal
 
 import pandas as pd
 from openai import OpenAI
 from prompts import GRADER_TEMPLATE
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
 
 
 class GradeAnswerModel(BaseModel):
@@ -37,7 +40,19 @@ def grading_answer(predicted_answer, problem, answer, model_config):
 
 def save_result(results, output_path):
     results_df = pd.DataFrame(results)
-    results_df.to_excel(output_path, index=False)
+    output_path = str(output_path)
+    if output_path.endswith(".xlsx"):
+        try:
+            results_df.to_excel(output_path, index=False)
+            return
+        except ModuleNotFoundError as exc:
+            if "openpyxl" not in str(exc):
+                raise
+            csv_path = output_path.replace(".xlsx", ".csv")
+            logger.warning("openpyxl is missing; writing CSV to %s", csv_path)
+            results_df.to_csv(csv_path, index=False)
+            return
+    results_df.to_csv(output_path, index=False)
 
 
 def get_accuracy_given_attempted(df) -> float:
