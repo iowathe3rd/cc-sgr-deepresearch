@@ -62,7 +62,7 @@ def _generate_dataset(seed: int, count: int, start: str, end: str, output_path: 
         "records": generate_records(count, start_dt, end_dt, seed),
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(dataset, indent=2), encoding="utf-8")
+    output_path.write_text(json.dumps(dataset, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def _expected_metrics(records: list[CallCenterRecord], case: dict) -> dict:
