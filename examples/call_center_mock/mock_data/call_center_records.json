@@ -1,0 +1,1022 @@
+[
+  {
+    "call_id": "C0001",
+    "call_start": "2024-08-01T09:12:34Z",
+    "call_end": "2024-08-01T09:25:10Z",
+    "duration_sec": 756,
+    "queue": "cards_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "NE",
+    "branch": "boston_central",
+    "agent": {
+      "agent_id": "A102",
+      "name": "J. Martin",
+      "team": "cards",
+      "tenure_months": 28,
+      "location": "Austin",
+      "quality_score": 88
+    },
+    "caller": {
+      "customer_id": "U11021",
+      "segment": "mass_affluent",
+      "tenure_years": 4.2,
+      "age_band": "35-44",
+      "products": ["credit_card", "checking"],
+      "risk_score": 0.22,
+      "churn_risk": "medium",
+      "nps_last": 7,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.61,
+      "avg_monthly_balance_usd": 8200,
+      "income_band": "70k-100k"
+    },
+    "interaction": {
+      "wait_time_sec": 84,
+      "hold_time_sec": 64,
+      "transfer_count": 1,
+      "after_call_work_sec": 110,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "dispute_policy",
+      "auth_method": "voice_biometrics",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "credit_card",
+      "issue_category": "chargeback",
+      "issue_subcategory": "merchant_dispute",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.42,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["frustration", "anxiety"],
+      "topics": ["chargeback", "merchant dispute", "timeline"],
+      "tags": ["complaint", "regulatory_risk", "high_value"],
+      "summary": "Customer disputes a $1,240 charge and requests a faster chargeback timeline.",
+      "call_intent": "file_dispute",
+      "resolution_summary": "Case escalated to disputes team for review.",
+      "transcript": "Agent: Thanks for calling card services.\nCustomer: I need to dispute a large charge.\nAgent: I can open a chargeback case and explain the timeline.\nCustomer: This is urgent and I am unhappy with delays.\nAgent: I will escalate to our disputes team for priority handling."
+    },
+    "quality": {
+      "silence_ratio": 0.12,
+      "overlap_ratio": 0.05,
+      "speech_rate_wpm": 162,
+      "script_adherence": 0.71
+    }
+  },
+  {
+    "call_id": "C0002",
+    "call_start": "2024-08-02T15:40:12Z",
+    "call_end": "2024-08-02T15:49:32Z",
+    "duration_sec": 560,
+    "queue": "cards_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "SE",
+    "branch": "atlanta_midtown",
+    "agent": {
+      "agent_id": "A118",
+      "name": "K. Evans",
+      "team": "cards",
+      "tenure_months": 14,
+      "location": "Nashville",
+      "quality_score": 82
+    },
+    "caller": {
+      "customer_id": "U11204",
+      "segment": "mass_market",
+      "tenure_years": 1.8,
+      "age_band": "25-34",
+      "products": ["debit_card", "savings"],
+      "risk_score": 0.11,
+      "churn_risk": "low",
+      "nps_last": 8,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.78,
+      "avg_monthly_balance_usd": 2400,
+      "income_band": "40k-70k"
+    },
+    "interaction": {
+      "wait_time_sec": 38,
+      "hold_time_sec": 22,
+      "transfer_count": 0,
+      "after_call_work_sec": 70,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "otp_sms",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "debit_card",
+      "issue_category": "lost_card",
+      "issue_subcategory": "replacement",
+      "resolution": "resolved",
+      "resolution_time_days": 2
+    },
+    "nlp": {
+      "sentiment_score": 0.12,
+      "sentiment_label": "neutral",
+      "emotion_peaks": ["concern"],
+      "topics": ["replacement", "shipping"],
+      "tags": ["card_replacement"],
+      "summary": "Caller reported a lost debit card and requested an expedited replacement.",
+      "call_intent": "replace_card",
+      "resolution_summary": "Replacement ordered with expedited delivery.",
+      "transcript": "Agent: I can lock the card and order a replacement.\nCustomer: Please expedite it for travel next week.\nAgent: Done, you'll receive it in two days."
+    },
+    "quality": {
+      "silence_ratio": 0.08,
+      "overlap_ratio": 0.03,
+      "speech_rate_wpm": 170,
+      "script_adherence": 0.83
+    }
+  },
+  {
+    "call_id": "C0003",
+    "call_start": "2024-08-03T11:05:44Z",
+    "call_end": "2024-08-03T11:28:20Z",
+    "duration_sec": 1356,
+    "queue": "lending_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "MW",
+    "branch": "chicago_loop",
+    "agent": {
+      "agent_id": "A205",
+      "name": "S. Patel",
+      "team": "mortgage",
+      "tenure_months": 34,
+      "location": "Chicago",
+      "quality_score": 90
+    },
+    "caller": {
+      "customer_id": "U12055",
+      "segment": "mass_market",
+      "tenure_years": 6.9,
+      "age_band": "45-54",
+      "products": ["mortgage", "checking"],
+      "risk_score": 0.37,
+      "churn_risk": "medium",
+      "nps_last": 5,
+      "delinquency_days": 15,
+      "digital_usage_score": 0.43,
+      "avg_monthly_balance_usd": 5100,
+      "income_band": "50k-80k"
+    },
+    "interaction": {
+      "wait_time_sec": 102,
+      "hold_time_sec": 96,
+      "transfer_count": 2,
+      "after_call_work_sec": 210,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "hardship_review",
+      "auth_method": "knowledge_based",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "mortgage",
+      "issue_category": "forbearance",
+      "issue_subcategory": "hardship_request",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.31,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["anxiety", "fear"],
+      "topics": ["hardship", "payment", "documentation"],
+      "tags": ["hardship", "regulatory_risk", "repeat_caller"],
+      "summary": "Caller seeks mortgage forbearance due to job loss and needs clarity on documentation.",
+      "call_intent": "request_forbearance",
+      "resolution_summary": "Escalated to hardship team with documentation checklist.",
+      "transcript": "Agent: I'm sorry about the job loss.\nCustomer: I need to pause payments and avoid fees.\nAgent: I'll connect you with hardship review; they will request documents."
+    },
+    "quality": {
+      "silence_ratio": 0.17,
+      "overlap_ratio": 0.04,
+      "speech_rate_wpm": 148,
+      "script_adherence": 0.69
+    }
+  },
+  {
+    "call_id": "C0004",
+    "call_start": "2024-08-04T13:18:01Z",
+    "call_end": "2024-08-04T13:36:42Z",
+    "duration_sec": 1121,
+    "queue": "small_business_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "SW",
+    "branch": "phoenix_market",
+    "agent": {
+      "agent_id": "A301",
+      "name": "L. Nguyen",
+      "team": "business_banking",
+      "tenure_months": 22,
+      "location": "Phoenix",
+      "quality_score": 86
+    },
+    "caller": {
+      "customer_id": "B4501",
+      "segment": "small_business",
+      "tenure_years": 3.3,
+      "age_band": "35-44",
+      "products": ["business_checking", "merchant_services"],
+      "risk_score": 0.29,
+      "churn_risk": "high",
+      "nps_last": 4,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.58,
+      "avg_monthly_balance_usd": 16200,
+      "income_band": "100k-150k"
+    },
+    "interaction": {
+      "wait_time_sec": 126,
+      "hold_time_sec": 110,
+      "transfer_count": 1,
+      "after_call_work_sec": 180,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "wire_trace",
+      "auth_method": "otp_app",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "wire_transfer",
+      "issue_category": "payment_failure",
+      "issue_subcategory": "incoming_wire_missing",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.55,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["frustration"],
+      "topics": ["wire", "cash_flow", "trace"],
+      "tags": ["complaint", "high_value", "repeat_caller"],
+      "summary": "Business owner reports missing incoming wire and requests a trace with same-day resolution.",
+      "call_intent": "trace_wire",
+      "resolution_summary": "Wire trace initiated and escalated to payments team.",
+      "transcript": "Agent: I can start a wire trace immediately.\nCustomer: This is hurting our payroll, I need it today.\nAgent: I'll escalate to payments and update you by end of day."
+    },
+    "quality": {
+      "silence_ratio": 0.14,
+      "overlap_ratio": 0.06,
+      "speech_rate_wpm": 165,
+      "script_adherence": 0.72
+    }
+  },
+  {
+    "call_id": "C0005",
+    "call_start": "2024-08-05T08:02:45Z",
+    "call_end": "2024-08-05T08:10:21Z",
+    "duration_sec": 456,
+    "queue": "digital_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "W",
+    "branch": "seattle_central",
+    "agent": {
+      "agent_id": "A407",
+      "name": "D. Baker",
+      "team": "digital",
+      "tenure_months": 10,
+      "location": "Seattle",
+      "quality_score": 84
+    },
+    "caller": {
+      "customer_id": "U13099",
+      "segment": "mass_market",
+      "tenure_years": 2.1,
+      "age_band": "25-34",
+      "products": ["checking", "savings"],
+      "risk_score": 0.08,
+      "churn_risk": "low",
+      "nps_last": 9,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.92,
+      "avg_monthly_balance_usd": 1800,
+      "income_band": "40k-70k"
+    },
+    "interaction": {
+      "wait_time_sec": 21,
+      "hold_time_sec": 10,
+      "transfer_count": 0,
+      "after_call_work_sec": 50,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "otp_sms",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "digital_banking",
+      "issue_category": "login_issue",
+      "issue_subcategory": "password_reset",
+      "resolution": "resolved",
+      "resolution_time_days": 0
+    },
+    "nlp": {
+      "sentiment_score": 0.35,
+      "sentiment_label": "positive",
+      "emotion_peaks": ["relief"],
+      "topics": ["login", "reset"],
+      "tags": ["digital_deflection"],
+      "summary": "Caller needed assistance resetting online banking password.",
+      "call_intent": "reset_password",
+      "resolution_summary": "Password reset completed and digital self-serve tips provided.",
+      "transcript": "Agent: I can send a reset link.\nCustomer: Great, I am in now.\nAgent: I will also enable biometric login for you."
+    },
+    "quality": {
+      "silence_ratio": 0.04,
+      "overlap_ratio": 0.02,
+      "speech_rate_wpm": 178,
+      "script_adherence": 0.89
+    }
+  },
+  {
+    "call_id": "C0006",
+    "call_start": "2024-08-06T16:30:10Z",
+    "call_end": "2024-08-06T16:47:55Z",
+    "duration_sec": 1065,
+    "queue": "retail_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "NE",
+    "branch": "newark_main",
+    "agent": {
+      "agent_id": "A154",
+      "name": "T. Owens",
+      "team": "retail",
+      "tenure_months": 19,
+      "location": "Newark",
+      "quality_score": 81
+    },
+    "caller": {
+      "customer_id": "U14102",
+      "segment": "mass_market",
+      "tenure_years": 3.5,
+      "age_band": "45-54",
+      "products": ["checking"],
+      "risk_score": 0.18,
+      "churn_risk": "medium",
+      "nps_last": 6,
+      "delinquency_days": 5,
+      "digital_usage_score": 0.47,
+      "avg_monthly_balance_usd": 900,
+      "income_band": "30k-50k"
+    },
+    "interaction": {
+      "wait_time_sec": 97,
+      "hold_time_sec": 80,
+      "transfer_count": 1,
+      "after_call_work_sec": 140,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "knowledge_based",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "checking",
+      "issue_category": "fee_dispute",
+      "issue_subcategory": "overdraft_fee",
+      "resolution": "resolved",
+      "resolution_time_days": 0
+    },
+    "nlp": {
+      "sentiment_score": -0.18,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["frustration"],
+      "topics": ["overdraft", "fee", "policy"],
+      "tags": ["complaint", "fee_waiver"],
+      "summary": "Caller requested reversal of an overdraft fee after a paycheck delay.",
+      "call_intent": "fee_reversal",
+      "resolution_summary": "One-time overdraft fee waiver issued.",
+      "transcript": "Agent: I can review the fee history.\nCustomer: This overdraft was out of my control.\nAgent: I approved a one-time waiver and set up alerts."
+    },
+    "quality": {
+      "silence_ratio": 0.11,
+      "overlap_ratio": 0.04,
+      "speech_rate_wpm": 156,
+      "script_adherence": 0.76
+    }
+  },
+  {
+    "call_id": "C0007",
+    "call_start": "2024-08-07T10:22:05Z",
+    "call_end": "2024-08-07T10:36:58Z",
+    "duration_sec": 893,
+    "queue": "fraud_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "SW",
+    "branch": "denver_market",
+    "agent": {
+      "agent_id": "A501",
+      "name": "R. Kim",
+      "team": "fraud",
+      "tenure_months": 26,
+      "location": "Denver",
+      "quality_score": 91
+    },
+    "caller": {
+      "customer_id": "U15115",
+      "segment": "mass_affluent",
+      "tenure_years": 5.4,
+      "age_band": "35-44",
+      "products": ["credit_card", "savings"],
+      "risk_score": 0.52,
+      "churn_risk": "high",
+      "nps_last": 3,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.65,
+      "avg_monthly_balance_usd": 12400,
+      "income_band": "100k-150k"
+    },
+    "interaction": {
+      "wait_time_sec": 62,
+      "hold_time_sec": 50,
+      "transfer_count": 0,
+      "after_call_work_sec": 190,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "fraud_investigation",
+      "auth_method": "voice_biometrics",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "credit_card",
+      "issue_category": "fraud_alert",
+      "issue_subcategory": "card_present",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.48,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["fear", "anger"],
+      "topics": ["fraud", "charge", "security"],
+      "tags": ["fraud_risk", "complaint", "high_value"],
+      "summary": "Customer reports suspicious card-present transaction and fears ongoing fraud.",
+      "call_intent": "report_fraud",
+      "resolution_summary": "Fraud investigation opened; card replaced and alerts enabled.",
+      "transcript": "Agent: I can block the card and investigate the transaction.\nCustomer: I am worried more charges will appear.\nAgent: The card is blocked and a new one is on the way."
+    },
+    "quality": {
+      "silence_ratio": 0.1,
+      "overlap_ratio": 0.03,
+      "speech_rate_wpm": 160,
+      "script_adherence": 0.79
+    }
+  },
+  {
+    "call_id": "C0008",
+    "call_start": "2024-08-08T17:10:55Z",
+    "call_end": "2024-08-08T17:25:30Z",
+    "duration_sec": 875,
+    "queue": "wealth_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "W",
+    "branch": "san_francisco_financial",
+    "agent": {
+      "agent_id": "A602",
+      "name": "M. Rivera",
+      "team": "wealth",
+      "tenure_months": 40,
+      "location": "San Francisco",
+      "quality_score": 94
+    },
+    "caller": {
+      "customer_id": "U16002",
+      "segment": "private_banking",
+      "tenure_years": 9.6,
+      "age_band": "55-64",
+      "products": ["investment", "checking", "savings"],
+      "risk_score": 0.06,
+      "churn_risk": "low",
+      "nps_last": 10,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.74,
+      "avg_monthly_balance_usd": 250000,
+      "income_band": ">200k"
+    },
+    "interaction": {
+      "wait_time_sec": 30,
+      "hold_time_sec": 20,
+      "transfer_count": 0,
+      "after_call_work_sec": 95,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "relationship_manager",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "investment",
+      "issue_category": "portfolio_review",
+      "issue_subcategory": "allocation_question",
+      "resolution": "resolved",
+      "resolution_time_days": 0
+    },
+    "nlp": {
+      "sentiment_score": 0.44,
+      "sentiment_label": "positive",
+      "emotion_peaks": ["confidence"],
+      "topics": ["portfolio", "allocation", "market_outlook"],
+      "tags": ["upsell", "high_value"],
+      "summary": "Private banking client requested portfolio allocation guidance and follow-up.",
+      "call_intent": "portfolio_guidance",
+      "resolution_summary": "Scheduled advisor follow-up and sent performance summary.",
+      "transcript": "Agent: We can review your allocation and schedule a strategy call.\nCustomer: I want to understand risk exposure.\nAgent: I will share a summary and book time with your advisor."
+    },
+    "quality": {
+      "silence_ratio": 0.05,
+      "overlap_ratio": 0.02,
+      "speech_rate_wpm": 155,
+      "script_adherence": 0.9
+    }
+  },
+  {
+    "call_id": "C0009",
+    "call_start": "2024-08-09T09:55:12Z",
+    "call_end": "2024-08-09T10:09:40Z",
+    "duration_sec": 868,
+    "queue": "lending_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "SE",
+    "branch": "miami_biscayne",
+    "agent": {
+      "agent_id": "A210",
+      "name": "N. Flores",
+      "team": "auto_loans",
+      "tenure_months": 17,
+      "location": "Miami",
+      "quality_score": 85
+    },
+    "caller": {
+      "customer_id": "U17017",
+      "segment": "mass_market",
+      "tenure_years": 2.7,
+      "age_band": "25-34",
+      "products": ["auto_loan", "checking"],
+      "risk_score": 0.14,
+      "churn_risk": "low",
+      "nps_last": 8,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.66,
+      "avg_monthly_balance_usd": 3100,
+      "income_band": "40k-70k"
+    },
+    "interaction": {
+      "wait_time_sec": 54,
+      "hold_time_sec": 40,
+      "transfer_count": 0,
+      "after_call_work_sec": 75,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "otp_sms",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "auto_loan",
+      "issue_category": "payoff_quote",
+      "issue_subcategory": "interest_calculation",
+      "resolution": "resolved",
+      "resolution_time_days": 0
+    },
+    "nlp": {
+      "sentiment_score": 0.05,
+      "sentiment_label": "neutral",
+      "emotion_peaks": ["curiosity"],
+      "topics": ["payoff", "interest", "schedule"],
+      "tags": ["quote_request"],
+      "summary": "Caller requested an auto loan payoff quote and payment schedule.",
+      "call_intent": "payoff_quote",
+      "resolution_summary": "Provided payoff quote and emailed schedule.",
+      "transcript": "Agent: I can provide your payoff amount and due date.\nCustomer: Please email it to me.\nAgent: Sent, and I can also mail it if needed."
+    },
+    "quality": {
+      "silence_ratio": 0.07,
+      "overlap_ratio": 0.02,
+      "speech_rate_wpm": 172,
+      "script_adherence": 0.86
+    }
+  },
+  {
+    "call_id": "C0010",
+    "call_start": "2024-08-10T14:42:03Z",
+    "call_end": "2024-08-10T15:05:58Z",
+    "duration_sec": 1435,
+    "queue": "small_business_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "MW",
+    "branch": "dallas_commerce",
+    "agent": {
+      "agent_id": "A318",
+      "name": "P. Grant",
+      "team": "business_banking",
+      "tenure_months": 31,
+      "location": "Dallas",
+      "quality_score": 83
+    },
+    "caller": {
+      "customer_id": "B4705",
+      "segment": "small_business",
+      "tenure_years": 4.9,
+      "age_band": "45-54",
+      "products": ["business_checking", "merchant_services"],
+      "risk_score": 0.41,
+      "churn_risk": "high",
+      "nps_last": 2,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.52,
+      "avg_monthly_balance_usd": 19800,
+      "income_band": "150k-200k"
+    },
+    "interaction": {
+      "wait_time_sec": 138,
+      "hold_time_sec": 120,
+      "transfer_count": 2,
+      "after_call_work_sec": 210,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "pricing_dispute",
+      "auth_method": "otp_app",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "merchant_services",
+      "issue_category": "pricing_dispute",
+      "issue_subcategory": "interchange_fee",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.61,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["anger"],
+      "topics": ["fees", "pricing", "contract"],
+      "tags": ["complaint", "pricing", "repeat_caller"],
+      "summary": "Merchant disputes interchange fees and contract pricing changes.",
+      "call_intent": "fee_dispute",
+      "resolution_summary": "Escalated to pricing review and account manager.",
+      "transcript": "Agent: I can review your fee schedule and escalate to pricing.\nCustomer: These fees are unacceptable.\nAgent: I'll flag this for a pricing review and follow up."
+    },
+    "quality": {
+      "silence_ratio": 0.15,
+      "overlap_ratio": 0.06,
+      "speech_rate_wpm": 168,
+      "script_adherence": 0.67
+    }
+  },
+  {
+    "call_id": "C0011",
+    "call_start": "2024-08-11T07:25:49Z",
+    "call_end": "2024-08-11T07:36:30Z",
+    "duration_sec": 641,
+    "queue": "cards_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "NE",
+    "branch": "boston_central",
+    "agent": {
+      "agent_id": "A112",
+      "name": "H. Lopez",
+      "team": "cards",
+      "tenure_months": 11,
+      "location": "Boston",
+      "quality_score": 87
+    },
+    "caller": {
+      "customer_id": "U18045",
+      "segment": "mass_market",
+      "tenure_years": 1.2,
+      "age_band": "18-24",
+      "products": ["credit_card"],
+      "risk_score": 0.16,
+      "churn_risk": "low",
+      "nps_last": 9,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.81,
+      "avg_monthly_balance_usd": 600,
+      "income_band": "<30k"
+    },
+    "interaction": {
+      "wait_time_sec": 27,
+      "hold_time_sec": 18,
+      "transfer_count": 0,
+      "after_call_work_sec": 65,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "otp_sms",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "credit_card",
+      "issue_category": "travel_notice",
+      "issue_subcategory": "international_travel",
+      "resolution": "resolved",
+      "resolution_time_days": 0
+    },
+    "nlp": {
+      "sentiment_score": 0.29,
+      "sentiment_label": "positive",
+      "emotion_peaks": ["relief"],
+      "topics": ["travel", "international", "alerts"],
+      "tags": ["travel_notice"],
+      "summary": "Caller requested travel notice setup for an upcoming trip.",
+      "call_intent": "set_travel_notice",
+      "resolution_summary": "Travel notice set and card security tips shared.",
+      "transcript": "Agent: I can add the travel notice for your dates.\nCustomer: Please add it for Italy next month.\nAgent: All set, enjoy your trip."
+    },
+    "quality": {
+      "silence_ratio": 0.05,
+      "overlap_ratio": 0.02,
+      "speech_rate_wpm": 175,
+      "script_adherence": 0.9
+    }
+  },
+  {
+    "call_id": "C0012",
+    "call_start": "2024-08-12T12:15:36Z",
+    "call_end": "2024-08-12T12:33:54Z",
+    "duration_sec": 1098,
+    "queue": "retail_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "MW",
+    "branch": "minneapolis_north",
+    "agent": {
+      "agent_id": "A176",
+      "name": "E. Price",
+      "team": "retail",
+      "tenure_months": 23,
+      "location": "Minneapolis",
+      "quality_score": 80
+    },
+    "caller": {
+      "customer_id": "U19110",
+      "segment": "mass_market",
+      "tenure_years": 5.1,
+      "age_band": "55-64",
+      "products": ["checking", "savings"],
+      "risk_score": 0.2,
+      "churn_risk": "medium",
+      "nps_last": 5,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.39,
+      "avg_monthly_balance_usd": 2200,
+      "income_band": "40k-70k"
+    },
+    "interaction": {
+      "wait_time_sec": 115,
+      "hold_time_sec": 95,
+      "transfer_count": 1,
+      "after_call_work_sec": 160,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "atm_dispute",
+      "auth_method": "knowledge_based",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "checking",
+      "issue_category": "atm_issue",
+      "issue_subcategory": "cash_withdrawal_error",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.39,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["frustration"],
+      "topics": ["atm", "cash", "dispute"],
+      "tags": ["complaint", "branch_followup"],
+      "summary": "Caller reports ATM did not dispense cash but account was debited.",
+      "call_intent": "atm_dispute",
+      "resolution_summary": "ATM dispute initiated and branch follow-up required.",
+      "transcript": "Agent: We'll open an ATM dispute and investigate.\nCustomer: I need my cash back quickly.\nAgent: We will provide a provisional credit if eligible."
+    },
+    "quality": {
+      "silence_ratio": 0.13,
+      "overlap_ratio": 0.04,
+      "speech_rate_wpm": 152,
+      "script_adherence": 0.7
+    }
+  },
+  {
+    "call_id": "C0013",
+    "call_start": "2024-08-13T18:44:10Z",
+    "call_end": "2024-08-13T18:58:42Z",
+    "duration_sec": 872,
+    "queue": "cards_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "SE",
+    "branch": "orlando_west",
+    "agent": {
+      "agent_id": "A134",
+      "name": "C. Ramirez",
+      "team": "cards",
+      "tenure_months": 16,
+      "location": "Orlando",
+      "quality_score": 85
+    },
+    "caller": {
+      "customer_id": "U20001",
+      "segment": "mass_affluent",
+      "tenure_years": 3.8,
+      "age_band": "35-44",
+      "products": ["credit_card", "savings"],
+      "risk_score": 0.12,
+      "churn_risk": "low",
+      "nps_last": 9,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.7,
+      "avg_monthly_balance_usd": 9500,
+      "income_band": "70k-100k"
+    },
+    "interaction": {
+      "wait_time_sec": 49,
+      "hold_time_sec": 30,
+      "transfer_count": 0,
+      "after_call_work_sec": 85,
+      "first_call_resolution": true,
+      "escalated": false,
+      "escalation_reason": null,
+      "auth_method": "otp_sms",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "credit_card",
+      "issue_category": "credit_limit",
+      "issue_subcategory": "increase_request",
+      "resolution": "resolved",
+      "resolution_time_days": 0
+    },
+    "nlp": {
+      "sentiment_score": 0.22,
+      "sentiment_label": "positive",
+      "emotion_peaks": ["confidence"],
+      "topics": ["limit", "income", "approval"],
+      "tags": ["upsell"],
+      "summary": "Customer requested a credit limit increase with updated income details.",
+      "call_intent": "increase_limit",
+      "resolution_summary": "Increase approved and confirmed.",
+      "transcript": "Agent: I can review your limit based on updated income.\nCustomer: Please proceed with the increase.\nAgent: Approved and effective immediately."
+    },
+    "quality": {
+      "silence_ratio": 0.06,
+      "overlap_ratio": 0.02,
+      "speech_rate_wpm": 169,
+      "script_adherence": 0.87
+    }
+  },
+  {
+    "call_id": "C0014",
+    "call_start": "2024-08-14T09:05:20Z",
+    "call_end": "2024-08-14T09:24:33Z",
+    "duration_sec": 1153,
+    "queue": "payments_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "NE",
+    "branch": "philadelphia_market",
+    "agent": {
+      "agent_id": "A220",
+      "name": "G. Turner",
+      "team": "payments",
+      "tenure_months": 20,
+      "location": "Philadelphia",
+      "quality_score": 84
+    },
+    "caller": {
+      "customer_id": "U21007",
+      "segment": "mass_market",
+      "tenure_years": 2.9,
+      "age_band": "35-44",
+      "products": ["checking"],
+      "risk_score": 0.24,
+      "churn_risk": "medium",
+      "nps_last": 6,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.58,
+      "avg_monthly_balance_usd": 1400,
+      "income_band": "40k-70k"
+    },
+    "interaction": {
+      "wait_time_sec": 104,
+      "hold_time_sec": 87,
+      "transfer_count": 1,
+      "after_call_work_sec": 145,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "ach_trace",
+      "auth_method": "otp_sms",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "ach_transfer",
+      "issue_category": "payment_pending",
+      "issue_subcategory": "ach_delay",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.28,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["concern"],
+      "topics": ["ach", "pending", "processing"],
+      "tags": ["payment_delay", "repeat_caller"],
+      "summary": "Customer calls about an ACH transfer still pending after three days.",
+      "call_intent": "ach_status",
+      "resolution_summary": "Trace initiated with payments team.",
+      "transcript": "Agent: I can check ACH status and start a trace.\nCustomer: It has been three business days already.\nAgent: I'll escalate to payments and update you."
+    },
+    "quality": {
+      "silence_ratio": 0.12,
+      "overlap_ratio": 0.04,
+      "speech_rate_wpm": 160,
+      "script_adherence": 0.74
+    }
+  },
+  {
+    "call_id": "C0015",
+    "call_start": "2024-08-15T19:22:30Z",
+    "call_end": "2024-08-15T19:44:41Z",
+    "duration_sec": 1331,
+    "queue": "retail_support",
+    "channel": "voice",
+    "language": "en",
+    "region": "SE",
+    "branch": "charlotte_uptown",
+    "agent": {
+      "agent_id": "A188",
+      "name": "B. Collins",
+      "team": "retail",
+      "tenure_months": 12,
+      "location": "Charlotte",
+      "quality_score": 78
+    },
+    "caller": {
+      "customer_id": "U22033",
+      "segment": "mass_market",
+      "tenure_years": 7.2,
+      "age_band": "55-64",
+      "products": ["checking", "credit_card"],
+      "risk_score": 0.33,
+      "churn_risk": "high",
+      "nps_last": 1,
+      "delinquency_days": 0,
+      "digital_usage_score": 0.31,
+      "avg_monthly_balance_usd": 2800,
+      "income_band": "40k-70k"
+    },
+    "interaction": {
+      "wait_time_sec": 142,
+      "hold_time_sec": 120,
+      "transfer_count": 2,
+      "after_call_work_sec": 220,
+      "first_call_resolution": false,
+      "escalated": true,
+      "escalation_reason": "service_quality",
+      "auth_method": "knowledge_based",
+      "auth_passed": true
+    },
+    "case": {
+      "product": "checking",
+      "issue_category": "service_complaint",
+      "issue_subcategory": "agent_behavior",
+      "resolution": "pending",
+      "resolution_time_days": null
+    },
+    "nlp": {
+      "sentiment_score": -0.66,
+      "sentiment_label": "negative",
+      "emotion_peaks": ["anger", "disappointment"],
+      "topics": ["service", "hold_time", "respect"],
+      "tags": ["complaint", "service_quality", "repeat_caller"],
+      "summary": "Caller complains about long hold times and perceived rude behavior from a prior agent.",
+      "call_intent": "file_complaint",
+      "resolution_summary": "Complaint logged and supervisor follow-up scheduled.",
+      "transcript": "Agent: I'm sorry about your experience, I will document the complaint.\nCustomer: I waited forever and felt dismissed.\nAgent: A supervisor will call you within 24 hours."
+    },
+    "quality": {
+      "silence_ratio": 0.18,
+      "overlap_ratio": 0.07,
+      "speech_rate_wpm": 150,
+      "script_adherence": 0.62
+    }
+  }
+]
