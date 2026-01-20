@@ -107,6 +107,7 @@ for chunk in response:
 ## Evaluation and Benchmark
 
 The benchmark runs predefined cases against the agent and uses a judge model to grade numeric accuracy.
+The judge must support structured outputs (`response_format` parsing).
 
 ### What it measures
 - Required KPIs vs expected values (tolerances are enforced by the judge prompt)
@@ -124,13 +125,35 @@ JUDGE_MODEL_NAME="gpt-5-nano-2025-08-07" \
 PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --generate_dataset
 ```
 
+### Useful CLI options
+
+Run a subset of cases:
+```bash
+PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --case-count 2 --case-sample random --case-seed 7
+```
+
+Run specific case IDs:
+```bash
+PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --case-ids aug_overall,jul_overall
+```
+
+Use a custom dataset file:
+```bash
+PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --dataset-path /path/to/call_center_records.json
+```
+
+Generate a smaller dataset sample:
+```bash
+PYTHONPATH=. .venv/bin/python benchmark/run_call_center_bench.py --generate_dataset --dataset-count 120
+```
+
 ### Benchmark inputs
 - Cases: `benchmark/call_center_cases.json`
 - Judge prompt: `benchmark/call_center_prompts.py`
 
 ### Output
-- `call_center_bench_results.xlsx` with columns:
-  - `case_id`, `task`, `expected`, `predicted`, `grade_str`, `grade_report`
+- Reports are saved as `evals/call_center_bench_<uuid>.xlsx` (or `.csv` if `openpyxl` is missing).
+- Columns: `case_id`, `task`, `expected`, `predicted`, `grade_str`, `grade_report`
 
 ## Metric Tests (deterministic)
 

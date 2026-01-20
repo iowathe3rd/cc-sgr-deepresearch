@@ -12,6 +12,7 @@ Rules:
 - Use tolerance: rates within ±0.02, averages within ±5.0 units, sentiment within ±0.05.
 - If most metrics are correct but one is missing, mark PARTIAL.
 - Only use the expected metrics below as ground truth.
+- Return a JSON object with keys: reasoning, expected_metrics, predicted_excerpt, grade_answer.
 
 Task:
 {task}
