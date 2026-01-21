@@ -272,7 +272,7 @@ uvicorn==0.37.0
     # via
     #   sgr-deep-research (pyproject.toml)
     #   mcp
-werkzeug==3.1.1
+werkzeug==3.1.5
     # via openapi-core
 youtube-transcript-api==1.2.2
     # via sgr-deep-research (pyproject.toml)
