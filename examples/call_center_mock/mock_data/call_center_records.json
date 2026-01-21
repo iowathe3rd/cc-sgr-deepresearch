@@ -1,7 +1,7 @@
 {
   "schema_version": "call_center.v2",
   "source_system": "mock_call_center",
-  "generated_at": "2026-01-20T12:18:08.244204Z",
+  "generated_at": "2026-01-20T12:27:27.111437Z",
   "records": [
     {
       "call_id": "C00001",
