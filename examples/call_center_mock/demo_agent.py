@@ -1,5 +1,9 @@
 import asyncio
+import json
 import os
+
+from rich.console import Console
+from rich.prompt import Prompt
 
 from sgr_agent_core import AgentFactory, AgentDefinition, PromptsConfig
 from sgr_agent_core.tools import AdaptPlanTool, ClarificationTool, FinalAnswerTool, GeneratePlanTool
@@ -16,6 +20,63 @@ Rely only on tool outputs and keep the analysis grounded in the data.
 Available tools:
 {available_tools}
 """
+
+
+console = Console()
+
+
+def _parse_sse_chunk(raw_chunk: str) -> dict | None:
+    data = raw_chunk.strip()
+    if not data.startswith("data:"):
+        return None
+    payload = data.removeprefix("data:").strip()
+    if payload == "[DONE]":
+        return None
+    try:
+        return json.loads(payload)
+    except json.JSONDecodeError:
+        return None
+
+
+async def _stream_agent_output(agent) -> list[str] | None:
+    clarification_questions: list[str] | None = None
+    async for raw_chunk in agent.streaming_generator.stream():
+        parsed = _parse_sse_chunk(raw_chunk)
+        if not parsed:
+            continue
+        choice = parsed.get("choices", [{}])[0]
+        delta = choice.get("delta", {})
+        content = delta.get("content")
+        if content:
+            console.print(content, end="", style="white")
+
+        tool_calls = delta.get("tool_calls") or []
+        for tool_call in tool_calls:
+            function = tool_call.get("function") or {}
+            if function.get("name") != "clarificationtool":
+                continue
+            args = function.get("arguments") or "{}"
+            try:
+                payload = json.loads(args)
+            except json.JSONDecodeError:
+                continue
+            clarification_questions = payload.get("questions") or []
+    return clarification_questions
+
+
+async def _run_agent_with_clarifications(agent) -> str | None:
+    execution_task = asyncio.create_task(agent.execute())
+    while True:
+        clarification_questions = await _stream_agent_output(agent)
+        if clarification_questions:
+            console.print("\n[bold red]Clarification needed:[/bold red]")
+            for index, question in enumerate(clarification_questions, 1):
+                console.print(f"[bold]{index}.[/bold] {question}", style="yellow")
+            clarification = Prompt.ask("[bold white]Enter your clarification[/bold white]")
+            await agent.provide_clarification([{"role": "user", "content": clarification}])
+            continue
+        break
+    return await execution_task
 
 
 async def main():
@@ -37,35 +98,35 @@ async def main():
         ],
         prompts=PromptsConfig(system_prompt_str=SYSTEM_PROMPT),
         llm={"api_key": api_key, "model": "gpt-5-nano-2025-08-07", "max_completion_tokens": 8192, "temperature": 1},
-        execution={"max_iterations": 15, "max_clarifications": 5, "logs_dir": "logs/call_center_mock", "reports_dir": "reports/call_center_mock"},
+        execution={
+            "max_iterations": 15,
+            "max_clarifications": 5,
+            "logs_dir": "logs/call_center_mock",
+            "reports_dir": "reports/call_center_mock",
+        },
         search={
             "tavily_api_key": os.getenv("TAVILY_API_KEY"),
             "max_searches": 4,
             "max_results": 10,
             "content_limit": 3500,
-        }
+        },
     )
 
-    task_messages = [
-        {
-            "role": "user",
-            "content": (
-                "Perform a comprehensive multi-dimensional analysis of Q3 2024 call center performance. "
-                "Analyze: (1) Segment performance by call type, agent tenure, and time-of-day patterns; "
-                "(2) Identify correlation between SLA breaches and customer churn; "
-                "(3) Decompose AHT variance across regions and languages; "
-                "(4) Evaluate FCR impact on CSAT and repeat contact rates; "
-                "(5) Assess compliance violations by severity and financial exposure; "
-                "(6) Model escalation drivers and propose intervention strategies; "
-                "(7) Quantify revenue leakage from abandoned calls and failed transfers; "
-                "(8) Benchmark against industry standards; (9) Project 30/60/90-day forecasts with confidence intervals; "
-                "(10) Deliver an executive summary with 10 prioritized initiatives ranked by ROI and implementation complexity."
-            ),
-        }
-    ]
-    agent = await AgentFactory.create(agent_def=agent_def, task_messages=task_messages)
-    result = await agent.execute()
-    print(result)
+    console.print("\n[bold green]Call Center Research CLI[/bold green]", style="bold white")
+    console.print("[white]Type 'exit' to quit.[/white]")
+
+    while True:
+        request = Prompt.ask("[bold white]Enter your request[/bold white]")
+        if not request or request.strip().lower() == "exit":
+            console.print("[bold white]Exiting.[/bold white]")
+            break
+
+        task_messages = [{"role": "user", "content": request}]
+        agent = await AgentFactory.create(agent_def=agent_def, task_messages=task_messages)
+        console.print(f"\n[bold green]Starting analysis:[/bold green] [italic]{request}[/italic]\n")
+        result = await _run_agent_with_clarifications(agent)
+        if result:
+            console.print("\n[bold green]Analysis complete.[/bold green]")
 
 
 if __name__ == "__main__":
