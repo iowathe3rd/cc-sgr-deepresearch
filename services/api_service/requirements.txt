@@ -120,7 +120,7 @@ lxml==5.4.0
     #   justext
     #   lxml-html-clean
     #   trafilatura
-lxml-html-clean==0.4.3
+lxml-html-clean==0.4.4
     # via lxml
 markdown-it-py==4.0.0
     # via rich
