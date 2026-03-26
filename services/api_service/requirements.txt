@@ -196,7 +196,7 @@ regex==2025.9.18
     # via
     #   dateparser
     #   tiktoken
-requests==2.32.5
+requests==2.33.0
     # via
     #   jsonschema-path
     #   tavily-python
