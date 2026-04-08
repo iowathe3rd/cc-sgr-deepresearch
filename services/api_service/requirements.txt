@@ -39,7 +39,7 @@ colorama==0.4.6
     #   tqdm
 courlan==1.3.2
     # via trafilatura
-cryptography==46.0.2
+cryptography==46.0.7
     # via authlib
 cyclopts==3.24.0
     # via fastmcp
